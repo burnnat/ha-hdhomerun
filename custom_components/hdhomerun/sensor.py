@@ -33,8 +33,21 @@ async def async_setup_entry(hass, config_entry, async_add_entities):
         tuner_count = device.tuner_count
         _LOGGER.debug("Detected %d tuners for device: %s" % (tuner_count, device_id))
 
+        adapter = HdhrDeviceQuery(HdhrUtility.device_create_from_str(device_id))
+
+        device_info = {
+            'identifiers': {
+                (DOMAIN, device_id)
+            },
+            'name': 'HDHomeRun ' + device_id,
+            'manufacturer': 'SiliconDust',
+            'model': adapter.get_model_str(),
+            'sw_version': adapter.get_version(),
+        }
+
         for tuner in range(0, tuner_count):
-            entities.append(TunerSensor("%s-%d" % (device_id, tuner)))
+            tuner_str = "%s-%d" % (device_id, tuner)
+            entities.append(TunerSensor(device_info, tuner_str))
 
     async_add_entities(entities, update_before_add=True)
 
@@ -43,11 +56,12 @@ async def async_setup_entry(hass, config_entry, async_add_entities):
 class TunerSensor(Entity):
     """Representation of a Sensor."""
 
-    def __init__(self, device_str):
+    def __init__(self, parent_info, device_str):
         """Initialize the sensor."""
         self._id = device_str
-        self._device = HdhrUtility.device_create_from_str(device_str)
-        self._adapter = HdhrDeviceQuery(self._device)
+        self._device_info = parent_info
+        self._adapter = HdhrDeviceQuery(
+            HdhrUtility.device_create_from_str(device_str))
         self._state = None
 
     async def async_update(self):
@@ -58,7 +72,7 @@ class TunerSensor(Entity):
     @property
     def name(self):
         """Return the name of the sensor."""
-        return "HDHomeRun Channel " + self._id
+        return "HDHomeRun Tuner " + self._id
 
     @property
     def unique_id(self):
@@ -68,3 +82,7 @@ class TunerSensor(Entity):
     def state(self):
         """Return the state of the sensor."""
         return self._state.nice_vchannel if self._state else None
+
+    @property
+    def device_info(self):
+        return self._device_info
