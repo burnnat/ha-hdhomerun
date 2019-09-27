@@ -6,7 +6,7 @@ from hdhr.adapter import HdhrUtility, HdhrDeviceQuery
 from homeassistant.components.sensor import DOMAIN as SENSOR_DOMAIN
 from homeassistant.helpers.entity import Entity
 
-from .const import DOMAIN
+from .const import DOMAIN, CONF_HOST
 
 _LOGGER = logging.getLogger(__name__)
 
