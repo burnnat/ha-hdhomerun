@@ -26,9 +26,6 @@ CONFIG_SCHEMA = vol.Schema(
     extra=vol.ALLOW_EXTRA
 )
 
-DATA_HDHR_MANAGER = "hdhomerun_manager"
-
-
 async def async_setup(hass, config):
     """Set up the HDHomeRun component."""
     conf = config.get(DOMAIN)
@@ -56,8 +53,6 @@ async def async_setup_entry(hass, entry):
 
 async def async_unload_entry(hass, entry):
     """Unload a config entry."""
-    hass.data.pop(DATA_HDHR_MANAGER).cleanup()
-
     await hass.config_entries.async_forward_entry_unload(entry, SENSOR_DOMAIN)
 
     return True
