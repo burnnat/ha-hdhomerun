@@ -125,7 +125,6 @@ class TunerSensor(Entity):
         
         else:
             raise 'Unknown status API: ' + self._status_api
-            return "No active stream"
 
     @property
     def name(self):

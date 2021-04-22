@@ -6,5 +6,5 @@
   "requirements": ["hdhr==0.0.8","hdhomerun"],
   "dependencies": [],
   "codeowners": [],
-  "version": ["0.5.5"]
+  "version": ["0.5.6"]
 }
