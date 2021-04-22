@@ -3,7 +3,7 @@
   "name": "HDHomeRun",
   "config_flow": true,
   "documentation": "https://github.com/berserkir-wolf/ha-hdhomerun",
-  "requirements": ["hdhr==0.0.8","hdhomerun","pyhdhomerun"],
+  "requirements": ["hdhr==0.0.8","pyhdhomerun"],
   "dependencies": [],
   "codeowners": [],
   "version": ["1.0.0"]
