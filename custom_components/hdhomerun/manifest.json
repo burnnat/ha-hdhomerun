@@ -3,9 +3,8 @@
   "name": "HDHomeRun",
   "config_flow": true,
   "documentation": "https://github.com/berserkir-wolf/ha-hdhomerun",
-  "requirements": ["libhdhomerun@git+https://github.com/Silicondust/libhdhomerun.git@master#egg=libhdhomerun.so"],
+  "requirements": ["hdhr==0.0.8","libhdhomerun@git+https://github.com/Silicondust/libhdhomerun.git@master#egg=libhdhomerun.so"],
   "dependencies": [],
   "codeowners": [],
-  "requirements": ["hdhr==0.0.8"],
   "version": ["2021.04.22"]
 }
