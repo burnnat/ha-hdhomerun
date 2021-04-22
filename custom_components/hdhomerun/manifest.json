@@ -2,7 +2,8 @@
   "domain": "hdhomerun",
   "name": "HDHomeRun",
   "config_flow": true,
-  "documentation": "https://github.com/burnnat/ha-hdhomerun",
+  "documentation": "https://github.com/berserkir-wolf/ha-hdhomerun",
+  "requirements": ["libhdhomerun@git+https://github.com/Silicondust/libhdhomerun.git"],
   "dependencies": [],
   "codeowners": [],
   "requirements": ["hdhr==0.0.8"]
