@@ -1,8 +1,9 @@
 """The HDHomeRun component."""
-__version__ = '0.0.6'
+__version__ = '0.0.7'
 
 import voluptuous as vol
 import homeassistant.helpers.config_validation as cv
+import pyhdhomerun
 
 from homeassistant import config_entries
 from homeassistant.const import CONF_PORT
