@@ -4,8 +4,7 @@ Custom component to view status of [HDHomeRun](https://www.silicondust.com/hdhom
 
 ## Installation
 
-This component requires the [libhdhomerun](https://github.com/Silicondust/libhdhomerun) library to function. 
-
+This component requires the [libhdhomerun](https://github.com/Silicondust/libhdhomerun) library to function.  
 This particular fork has had an extra requirement added - `pyhdhomerun`. This auto-installs the `libhdhomerun` after Home Assistant restarts.
 
 ### Manual Dependency Installation
