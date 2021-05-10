@@ -3,6 +3,7 @@ from homeassistant.helpers import config_entry_flow
 from homeassistant import config_entries
 
 from hdhr.adapter import HdhrUtility
+import pyhdhomerun
 
 from .const import DOMAIN
 
