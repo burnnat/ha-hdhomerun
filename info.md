@@ -1,12 +1,11 @@
 # HA-HDHomeRun
 
-[![hacs_badge](https://img.shields.io/badge/HACS-Default-orange.svg)](https://github.com/custom-components/hacs)
-
 A custom component to view status of [HDHomeRun](https://www.silicondust.com/hdhomerun/) devices from Home Assistant.
 
 ## Installation
 
 This component requires the [libhdhomerun](https://github.com/Silicondust/libhdhomerun) library to function.  
+See [ReadMe](https://github.com/Berserkir-Wolf/ha-hdhomerun/blob/master/README.md) for full instructions.  
 
 ### Manual Dependency Installation
 
@@ -23,13 +22,6 @@ apk add libhdhomerun
 ```
 
 Other systems may require building the library from source.
-
-### Docker Container
-
-To install the dependency in the HAss docker container, you'll need to connect to the CLI of your container.  
-This can be done by running `docker exec -it homeassistant /bin/sh` from an SSH session on your host.  
-Once in, run `apk install libhdhomerun` and then `exit` to disconnect.  
-Note that this will need periodic reinstallation following big updates.
 
 ## Configuration
 
