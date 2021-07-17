@@ -2,8 +2,10 @@
   "domain": "hdhomerun",
   "name": "HDHomeRun",
   "config_flow": true,
-  "documentation": "https://github.com/burnnat/ha-hdhomerun",
+  "documentation": "https://github.com/berserkir-wolf/ha-hdhomerun",
+  "requirements": ["hdhr>=0.0.8"],
   "dependencies": [],
   "codeowners": [],
-  "requirements": ["hdhr==0.0.8"]
+  "version": "0.1.4",
+  "beta": false
 }
