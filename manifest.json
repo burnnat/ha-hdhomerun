@@ -1,0 +1,10 @@
+{
+  "domain": "AntennaTuner",
+  "name": "HDHomeRun",
+  "version": "0.0.8",
+  "documentation": "https://github.com/Nils154/ha-hdhomerun",
+  "dependencies": [],
+  "codeowners": [],
+  "requirements": [],
+  "iot_class": "cloud_polling"
+}
