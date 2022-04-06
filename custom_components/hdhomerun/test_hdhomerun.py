@@ -126,10 +126,16 @@ if __name__ == '__main__':
             hd = HdhrUtility.device_create_from_str(tuner_str)
             device_adapter = HdhrDeviceQuery(hd)
             streaminfo = device_adapter.get_tuner_streaminfo()
+            print('streaminfo', streaminfo)
             if len(streaminfo) != 0:
-                program = int(device_adapter.get_tuner_program())-1
-                channel = streaminfo[program].vchannel
-                channel_name = streaminfo[program].name
+                program = device_adapter.get_tuner_program()
+                print("Program ", program)
+                channel = None
+                channel_name = None
+                for stream in streaminfo:
+                    if stream.program == program:
+                        channel = stream.vchannel
+                        channel_name = stream.name
                 print("Active Channel on tuner:", tuner_str, channel, channel_name)
                 (status, raw_data) = device_adapter.get_tuner_status()
                 # there are errors in the mapping of raw_date to status, we do it ourselves

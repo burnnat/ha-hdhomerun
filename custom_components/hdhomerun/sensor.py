@@ -12,6 +12,7 @@ from .const import DOMAIN, CONF_HOST
 
 _LOGGER = logging.getLogger(__name__)
 
+
 async def async_setup_entry(hass, config_entry, async_add_entities):
     """Set up HDHomeRun from a config entry."""
     hosts = hass.data[DOMAIN].get(SENSOR_DOMAIN)
@@ -55,11 +56,6 @@ async def async_setup_entry(hass, config_entry, async_add_entities):
 
     return True
 
-class StatusApi(IntEnum):
-    # Note that these APIs are in fallback order
-    VSTATUS = 1
-    STREAMINFO = 2
-    STATUS = 3
 
 class TunerSensor(Entity):
     """Representation of a Sensor."""
@@ -70,61 +66,37 @@ class TunerSensor(Entity):
         self._device_info = parent_info
         self._adapter = HdhrDeviceQuery(
             HdhrUtility.device_create_from_str(device_str))
-        self._status_api = StatusApi(1)
         self._state = None
+        self._custom_attributes = {}
 
     async def async_update(self):
-        self._state = self.fetch_channel()
-
-    def fetch_channel(self):
-        while True:
-            try:
-                return self.fetch_channel_raw()
-            except OperationRejectedError:
-                has_fallback = self.switch_fallback_api()
-
-                if not has_fallback:
-                    raise
-
-    def switch_fallback_api(self):
-        try:
-            next_api = StatusApi(self._status_api + 1)
-            _LOGGER.debug(
-                'Operation %s not supported, falling back to %s for tuner: %s',
-                self._status_api.name,
-                next_api.name,
-                self._id)
-            self._status_api = next_api
-            return True
-        except ValueError:
-            return False
-
-    def fetch_channel_raw(self):
         _LOGGER.debug(
-            'Fetching %s for tuner: %s',
-            self._status_api.name,
+            'Updating tuner: %s',
             self._id)
-
-        if self._status_api == StatusApi.VSTATUS:
-            (vstatus, raw_data) = self._adapter.get_tuner_vstatus()
-            return vstatus.nice_vchannel
-        
-        elif self._status_api == StatusApi.STREAMINFO:
-            streaminfo = self._adapter.get_tuner_streaminfo()
-
-            if not streaminfo:
-                return None
-
+        stream_info = self._adapter.get_tuner_streaminfo()
+        if len(stream_info) != 0:
             program = self._adapter.get_tuner_program()
-            active = next(x for x in streaminfo if x.program == program)
-            return active.vchannel
-
-        elif self._status_api == StatusApi.STATUS:
+            channel = program
+            channel_name = None
+            for stream in stream_info:
+                if stream.program == program:
+                    channel = stream.vchannel
+                    channel_name = stream.name
             (status, raw_data) = self._adapter.get_tuner_status()
-            return status.nice_channel
-        
+            # there are errors in the mapping of raw_date to status, we do it ourselves
+            new_status = {}
+            for x in str(raw_data).split(' '):
+                snippet = x.split('=')
+                new_status.update({snippet[0]: snippet[1]})
+            if channel_name:
+                self._state = channel+' '+channel_name
+            else:
+                self._state = channel
+            self._custom_attributes['signal_strength'] = new_status['ss']
+            self._custom_attributes['snr'] = new_status['snq']
+            self._custom_attributes['bps'] = new_status['bps']
         else:
-            raise 'Unknown status API: ' + self._status_api
+            self._state = 'not in use'
 
     @property
     def name(self):
@@ -143,3 +115,8 @@ class TunerSensor(Entity):
     @property
     def device_info(self):
         return self._device_info
+
+    @property
+    def device_state_attributes(self):
+        """Return the state attributes of the sensor."""
+        return self._custom_attributes
