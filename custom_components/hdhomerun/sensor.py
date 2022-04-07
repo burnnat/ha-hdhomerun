@@ -67,7 +67,7 @@ class TunerSensor(Entity):
         self._adapter = HdhrDeviceQuery(
             HdhrUtility.device_create_from_str(device_str))
         self._state = None
-        self._custom_attributes = {}
+        self._extra_state_attributes = {}
 
     async def async_update(self):
         _LOGGER.debug(
@@ -92,9 +92,9 @@ class TunerSensor(Entity):
                 self._state = channel+' '+channel_name
             else:
                 self._state = channel
-            self._custom_attributes['signal_strength'] = new_status['ss']
-            self._custom_attributes['snr'] = new_status['snq']
-            self._custom_attributes['bps'] = new_status['bps']
+            self._extra_state_attributes['signal_strength'] = new_status['ss']
+            self._extra_state_attributes['snr'] = new_status['snq']
+            self._extra_state_attributes['bps'] = new_status['bps']
         else:
             self._state = 'not in use'
 
@@ -117,6 +117,6 @@ class TunerSensor(Entity):
         return self._device_info
 
     @property
-    def device_state_attributes(self):
+    def extra_state_attributes(self):
         """Return the state attributes of the sensor."""
-        return self._custom_attributes
+        return self._extra_state_attributes

@@ -6,6 +6,7 @@ from hdhr.adapter import HdhrUtility
 
 from .const import DOMAIN
 
+
 async def _async_has_devices(hass):
     """Return if there are devices that can be discovered."""
     hdhr_devices = HdhrUtility.discover_find_devices_custom()
