@@ -97,6 +97,9 @@ class TunerSensor(Entity):
             self._extra_state_attributes['bps'] = new_status['bps']
         else:
             self._state = 'not in use'
+            self._extra_state_attributes['signal_strength'] = None
+            self._extra_state_attributes['snr'] = None
+            self._extra_state_attributes['bps'] = None
 
     @property
     def name(self):
