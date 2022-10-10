@@ -5,5 +5,12 @@
   "documentation": "https://github.com/burnnat/ha-hdhomerun",
   "dependencies": [],
   "codeowners": [],
-  "requirements": ["hdhr==0.0.8"]
+  "version": "0.0.8",
+  "requirements": ["hdhr==0.0.8"],
+  "ssdp": [
+    {
+      "manufacturer": "Silicondust",
+      "deviceType": "urn:schemas-upnp-org:device:MediaServer:1"
+    }
+  ]
 }
